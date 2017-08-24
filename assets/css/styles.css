@@ -1,0 +1,77 @@
+
+/*-------------------
+Styles
+-------------------*/
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  background-image: url("../images/cartographer.png");
+}
+
+h1 {
+  font-size: 4em;
+  text-align: center;
+  color: #fff;
+}
+
+h2 {
+  font-size: 2em;
+  padding: 10px 0 15px 0;
+  border-bottom: 2px solid #ff8c1a;
+  margin: 0 0 10px 0;
+}
+
+h3 {
+  font-size: 1.3em;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+div {
+  background-color: lightgrey;
+}
+
+/*-------------------
+Start DIV and Start Button
+-------------------*/
+
+.start {
+  outline: 1px solid #66ff33;
+  text-align: center;
+  height: 300px;
+  width: 400px;
+  margin: 85px auto;
+}
+
+.startButton {
+  background-color: #ff0000;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 500%;
+  position: relative;
+  box-shadow: inset -10px -10px 100px #000, 10px 10px 20px black, inset 0px 0px 10px black;
+  display: inline-block;
+}
+
+/*-------------------
+Questionarre
+-------------------*/
+
+.questionDisplay {
+  outline: 1.5px solid #66ff33;
+  text-align: center;
+  height: auto;
+  width: 800px;
+  margin: 85px auto;
+  padding: 10px;
+}
+
+.answerArr {
+  display: inline-block;
+  padding: 10px;
+  margin: 0;
+}
