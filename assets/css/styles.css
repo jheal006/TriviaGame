@@ -45,6 +45,7 @@ Start DIV and Start Button
 }
 
 .startButton {
+  cursor: pointer;
   background-color: #ff0000;
   height: 50px;
   width: 50px;
@@ -57,21 +58,59 @@ Start DIV and Start Button
   display: inline-block;
 }
 
+.startButton:hover{
+  background-color: #ff0000;
+  box-shadow: inset -10px -10px 100px #ff0000, 10px 10px 20px #000, inset 0px 0px 10px #000;
+}
+
 /*-------------------
 Questionarre
 -------------------*/
 
-.questionDisplay {
+.timer {
+  text-align: center;
+  height: auto;
+  width: 820px;
+  margin: 0 auto;
+}
+
+.banner {
   outline: 1.5px solid #66ff33;
   text-align: center;
   height: auto;
   width: 800px;
-  margin: 85px auto;
+  margin: 30px auto;
   padding: 10px;
+}
+
+.banner p {
+  display: inline-block;
+  padding: 0 5px;
 }
 
 .answerArr {
   display: inline-block;
   padding: 10px;
   margin: 0;
+}
+
+#submit {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 auto;
+  height: 40px;
+  width: 100px;
+  outline: 1.5px solid #66ff33;
+}
+
+.resultsDisplay {
+  outline: 1.5px solid #66ff33;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  height: auto;
+  width: 800px;
+  margin: 85px auto;
+  padding: 10px;
 }

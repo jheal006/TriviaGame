@@ -2,79 +2,146 @@
 // Trivia Game:
 //  - Create a trivia form with multiple choice or true/false options (your choice)
 //  - Player has a limited amount of time to answer each question.
-//  - The game ends when the time runs out! At that point the page will reveal the number of
-//       questions that player has answered correctly and incorrectly
+//  - The game ends when the time runs out! At that point the page will reveal the number of questions that player has answered correctly and incorrectly
 /////////
-
-
 // Create a trivia game that shows only one question until the player answers it or their time runs
 //  out.
 
+
 $( document ).ready(function() {
 
-    //Timer
-    $(".timerButton").on("click", countdownTimer.run, countdownTimer.stopTimer);
-    // Declare Triva Game Object
+    // Timer
+$(".testQuestions, #submit, .resultsDisplay, .banner").hide();
 
-    $(".testQuestions").html("<h3>" + quizQuestions.questions[0] + "</h3>").append(displayAnswer(quizQuestions.answersOne));
-    $(".testQuestions").append("<h3>" + quizQuestions.questions[1] + "</h3>").append(displayAnswer(quizQuestions.answersTwo));
-    $(".testQuestions").append("<h3>" + quizQuestions.questions[2] + "</h3>").append(displayAnswer(quizQuestions.answersThree));
+    // $(".testQuestions").html("<h3>" + quizQuestions.questions[0] + "</h3>").append(displayQuiz(quizQuestions.answersOne));
+$(".startButton").click(function(){
+  $(".testQuestions, #submit, .banner").show();
+  $(".start").hide();
+  $(countdownTimer.run);
+});
 
-  });
-
-
-
-    // Scores//
-    var answeredCorrect = 0;
-    var answeredWrong = 0;
+    //Display Divs
+    var testQuestions = ".testQuestions";
+    var resultsDisplay = ".resultsDisplay";
+    var submitButton = "#submit";
     //Variable that will hold our interval ID when we execture "run" function
     var intervalID;
 
-    // If the player selects the correct answer, show a screen congratulating the player for choosing the
-    // correct answer, wait a few seconds, then display the next question.
-
-    // Do the same for a wrong answer, as well if the player runs out of time on that specfic question.
-
-    // Lastly display the final number of correct and incorrect answeres, and an option to reset the countdownTimer
-    //   without reloading the page.
-
-    //Question and Answers
-
-    var quizQuestions = {
-      questions : ['How many licks does it take to get to the center of a tootsie roll pop?', 'When will then be now?', 'Where in the World is Carmen San Diego?'],
-      answersOne : ['50', '100', '1,000', '50,000', 'The world may never know...' ],
-      answersTwo: ['Soon', 'Sometime in the near future', 'Tomorrow', 'What does it matter', 'What kind of stupid question is this?'],
-      answersThree: ['San Diego', 'Portugal', 'Madagascar', 'What are you talking about?'],
-      correctAnswers: ['The world may never know...', 'Soon', 'Madagascar']
-    };
-
-
-    function displayAnswer(arr) {
-      html = '';
-      name = 'answers' + 1;
-      for (i = 0; i < arr.length; i++) {
-        html += '<p class="answerArr">' + '<input type="radio" name=" ' +  name  + ' " >' + arr[i] + '</p>';
+  // Declare Triva Game Array of Questions
+    var quizQuestions = [
+      {
+        question: '<h3>How many licks does it take to get to the center of a tootsie roll pop?</h3>',
+        answers: {
+          a: '50',
+          b: '100',
+          c: '1,000',
+          d: '50,000',
+          e: 'The world may never know...'
+        },
+        correctAnswer: 'e'
+      },
+      {
+        question: '<h3>When will then be now?</h3>',
+        answers: {
+          a: 'Soon',
+          b: 'Sometime in the near future',
+          c: 'Tomorrow',
+          d: 'What does it matter',
+          e: 'What kind of stupid question is this?'
+        },
+        correctAnswer: 'a'
+      },
+      {
+        question: '<h3>Where in the world is Carmen San Diego?</h3>',
+        answers: {
+          a: 'San Diego',
+          b: 'Portugal',
+          c: 'Madagascar',
+          d: 'Mongolia',
+          e: 'What are you talking about?'
+        },
+        correctAnswer: 'c'
       }
-      name ++;
-      return html
-    };
+    ];
 
+    //Generate Quiz
+    generateQuiz(quizQuestions, testQuestions, resultsDisplay, submitButton);
 
+    function generateQuiz(questions, testQuestions, resultsDisplay, submitButton){
+    // Display Quiz Questions
+    function displayQuiz(questions, testQuestions) {
+      //Store output and answers
+      var output = [];
+      var answers;
+      //Loop through the different questions
+      for (i = 0; i < questions.length; i++) {
+        //clear out the answers
+        answers = [];
+          //Loop through the answers with For In loop Good for Objects!
+          for(letter in questions[i].answers) {
+            answers.push(
+              '<p>'
+                + '<input type="radio" name="question' + i + '"value ="' + letter + '">'
+                + questions[i].answers[letter]
+              +'</p>'
+            );
+          }
+        // add the question and the Correct Answer to ouput
+        output.push(
+          '<div class="question">' + questions[i].question + '</div>'
+          + '<div class="answers">' + answers.join('') + '</div>'
+        );
+      }
+      //Combine Output list into one string to place on the page
+      $(testQuestions).append(output);
+    }
 
-    // function displayAnswer(arr) {
-    //   html = '';
-    //   for (i = 0; i < arr.length; i++) {
-    //     html += '<p class="answerArr">' + arr[i] + '</p>';
-    //   }
-    //   return html
-    // };
+    /////////////
+    //Display Quiz
+    /////////////
 
+    displayQuiz(quizQuestions, testQuestions);
+    //Display Answers with Submit
+    function displayResults(questions, testQuestions, resultsDiv) {
+      //Retrieve Answers For the results
+      var answerDisplay = $(testQuestions).hasClass('answers');
+      // testQuestions.querySelector('.answers');
+      var radio
+      //Keep track of the Users Pick
+      var userAnswer = '';
+      var numberCorrect = 0;
 
+      for(var i=0; i<questions.length; i++){
+        userAnswer = $('input:checked').val();
+        // userAnswer = $('answerDisplay').is(':checked');
+        //if answer is correct
+        if(userAnswer===questions[i].correctAnswer){
+          numberCorrect++;
+          answerDisplay;
+        }
+      }
+      //Display the number of correct answers
+      $(resultsDisplay).html(numberCorrect + ' out of ' + questions.length);
+      if($(resultsDisplay).html(numberCorrect + ' out of ' + questions.length) ==''){
+        $(resultsDisplay).html('None of the answers were correct!');
+      }
+    }
 
+    $(submitButton).click(function(){
+        displayResults(questions, testQuestions, resultsDisplay)
+        clearInterval(intervalID);
+        $(".resultsDisplay").show();
+        $(".banner").find("h2").html('Check out Your Results!');
+        $("#submit").hide();
+        $(".testQuestions").hide();
+    });
+  } // End of Quiz
+
+    ///////////////////////
     //Countdown Timer Object
+    ///////////////////////
     var countdownTimer = {
     //The run function sets an intervalthat runs the decrement function once a seconds
-
     numberCounter: 20,
     run: function() {
       intervalID = setInterval(countdownTimer.decrement,1000);
@@ -87,16 +154,14 @@ $( document ).ready(function() {
       $(".timer").html("<h2>" + countdownTimer.numberCounter + "</h2>");
       // Once number hits zero...
       if (countdownTimer.numberCounter === 0) {
-        // ...run the stop function
-        countdownTimer.timerDone();
+        clearInterval(intervalID);
         //Alert the user that time is up!
-        alert("You have failed your highness!")
-      }
-    },
-    //The timerDone function
-    timerDone: function () {
-          clearInterval(intervalID);
-          countdownRunning = false;
+        $(".banner").find("h2").html('Game Over Man!');
+        $("#submit").hide();
+        $(".testQuestions").hide();
+        $(".resultsDisplay").show();
         }
+      },
+    }
 
-  };
+});
